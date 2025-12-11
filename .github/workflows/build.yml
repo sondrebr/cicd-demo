@@ -1,4 +1,4 @@
-name: Minimal usage
+name: Build and test with EESSI
 on: [push, pull_request]
 jobs:
   build:
@@ -8,5 +8,10 @@ jobs:
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
-        module avail
+        module load CMake HDF5 buildenv
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ctest --output-on-failure --verbose
       shell: bash
